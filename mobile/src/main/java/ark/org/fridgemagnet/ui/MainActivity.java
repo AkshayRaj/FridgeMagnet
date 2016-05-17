@@ -7,17 +7,22 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 import ark.org.fridgemagnet.R;
 
 public class MainActivity extends AppCompatActivity{
+    private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ItemAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate()");
         setContentView(R.layout.main_activity);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -30,8 +35,8 @@ public class MainActivity extends AppCompatActivity{
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // specify an adapter (see also next example)
-        mAdapter = new MyAdapter(new String[]{"One","Two","Three", "Four"});
+        mAdapter = ItemAdapter.getInstance();
+
         mRecyclerView.setAdapter(mAdapter);
     }
 }
