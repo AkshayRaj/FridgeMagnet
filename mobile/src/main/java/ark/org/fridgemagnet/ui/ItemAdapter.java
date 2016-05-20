@@ -30,7 +30,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     // Provide a suitable constructor (depends on the kind of dataset)
     private ItemAdapter() {
-
+        mDataset = new ArrayList<>();
+        mDataset.add(new Item("Enter a new Item"));
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {

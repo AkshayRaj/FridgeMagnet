@@ -3,20 +3,23 @@
  */
 package ark.org.fridgemagnet.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import java.util.ArrayList;
+import android.view.View;
+import android.widget.EditText;
 
 import ark.org.fridgemagnet.R;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = MainActivity.class.getSimpleName();
+    private Activity mActivity;
+    private EditText mAddItemEditText;
     private RecyclerView mRecyclerView;
-    private ItemAdapter mAdapter;
+    private ItemAdapter mItemAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -24,7 +27,9 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         Log.i(TAG, "onCreate()");
         setContentView(R.layout.main_activity);
+        mActivity = this;
 
+        mAddItemEditText = (EditText) findViewById(R.id.edittext_additem);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -35,8 +40,23 @@ public class MainActivity extends AppCompatActivity{
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = ItemAdapter.getInstance();
+        mItemAdapter = ItemAdapter.getInstance();
 
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mItemAdapter);
+    }
+
+    /**
+     * Interface - View.OnClickListener
+     * Called when a view has been clicked.
+     *
+     * @param view The view that was clicked.
+     */
+    @Override
+    public void onClick(View view) {
+        final int viewId = view.getId();
+        switch (viewId){
+            case R.id.edittext_additem :
+                break;
+        }
     }
 }
