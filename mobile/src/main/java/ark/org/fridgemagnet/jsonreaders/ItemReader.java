@@ -5,9 +5,11 @@ package ark.org.fridgemagnet.jsonreaders;
 
 import android.content.Context;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.stream.JsonWriter;
 
 import android.util.Log;
@@ -15,10 +17,6 @@ import android.util.Log;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
 public class ItemReader {
     private static final String TAG = ItemReader.class.getSimpleName();
@@ -35,31 +33,30 @@ public class ItemReader {
     }
 
     public void insertItem(int index, String itemName) {
-        new JsonParser().parse("").getAsJsonArray();
+        String jsonData = Utils.readFromFile(mContext.getFileStreamPath(ITEMS_JSON_FILE));
+        JsonElement jsonElement = new JsonParser().parse(jsonData);
+        JsonArray jsonArray;
+        if(jsonElement.isJsonArray()) {
+            jsonArray = jsonElement.getAsJsonArray();
+        } else {
+            jsonArray = new JsonArray();
+        }
+        jsonArray.add(new JsonPrimitive(itemName));
+        Utils.writeToFile(mContext.getFileStreamPath(ITEMS_JSON_FILE), jsonArray.toString());
+
     }
 
     public String getItem(int index){
         return null;
     }
 
-    private JsonReader openJsonFile(){
-        JsonReader jsonReader = null;
-        try {
-            InputStream inputStream = mContext.getAssets().open(ITEMS_JSON_FILE);
-            jsonReader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-        } catch (IOException ioException) {
-            Log.wtf(TAG, "Error opening Items.json file from Assets " + ioException.getMessage());
-        }
-        return jsonReader;
-    }
 
     private ItemReader(Context context){
         mContext = context.getApplicationContext();
-        createItemsFile(mContext);
+        //createItemsFile(mContext);
     }
 
     private void createItemsFile(Context context){
-        Log.wtf(TAG, "createItemsFile()");
         File itemsFile = new File(mContext.getFilesDir(), ITEMS_JSON_FILE);
         try {
             JsonWriter jsonWriter = new JsonWriter(new FileWriter(itemsFile));
@@ -67,10 +64,7 @@ public class ItemReader {
             jsonWriter.endArray();
             jsonWriter.close();
         } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        if(itemsFile.exists()){
-            Log.wtf(TAG, "File created successfully " + itemsFile.getAbsolutePath());
+
         }
     }
 }

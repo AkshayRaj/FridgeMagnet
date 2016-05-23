@@ -54,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
-                    String string = mAddItemEditText.getText().toString().replace(" ", "");
-                    mItemAdapter.getDataSet().add(0,new Item(string));
+                    String newItem = mAddItemEditText.getText().toString().replace(" ", "");
+                    mItemAdapter.getDataSet().add(0,new Item(newItem));
+                    ItemReader.init(getApplicationContext()).insertItem(0, newItem);
                     mItemAdapter.notifyItemInserted(0);
                     mAddItemEditText.setText("");
                     mLayoutManager.scrollToPosition(0);
@@ -65,6 +66,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ItemReader.init(getApplicationContext());
     }
 }
