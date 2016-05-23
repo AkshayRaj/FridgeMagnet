@@ -11,11 +11,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import ark.org.fridgemagnet.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private Activity mActivity;
     private EditText mAddItemEditText;
@@ -32,24 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mItemAdapter = ItemAdapter.getInstance();
 
         mAddItemEditText = (EditText) findViewById(R.id.edittext_additem);
-        mAddItemEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
-                if(keyEvent != null) {
-                    if (keyEvent.getAction() == KeyEvent.ACTION_DOWN)
-                        return true;
-
-                    if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                        String string = mAddItemEditText.getText().toString().replace(" ", "");
-                        Log.wtf(TAG, string);
-                        mItemAdapter.getDataSet().add(new Item(string));
-                        mItemAdapter.notifyItemInserted(0);
-                        mAddItemEditText.setText("");
-                    }
-                }
-                return false;
-            }
-        });
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
@@ -62,20 +46,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         mRecyclerView.setAdapter(mItemAdapter);
-    }
-
-    /**
-     * Interface - View.OnClickListener
-     * Called when a view has been clicked.
-     *
-     * @param view The view that was clicked.
-     */
-    @Override
-    public void onClick(View view) {
-        final int viewId = view.getId();
-        switch (viewId){
-            case R.id.edittext_additem :
-                break;
-        }
+        mAddItemEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    String string = mAddItemEditText.getText().toString().replace(" ", "");
+                    mItemAdapter.getDataSet().add(0,new Item(string));
+                    mItemAdapter.notifyItemInserted(0);
+                    mAddItemEditText.setText("");
+                    mLayoutManager.scrollToPosition(0);
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

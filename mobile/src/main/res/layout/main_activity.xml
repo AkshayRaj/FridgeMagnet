@@ -12,6 +12,8 @@
         android:gravity="center"
         android:hint="Enter a new Item"
         android:singleLine="true"
+        android:imeOptions="actionDone"
+        android:nextFocusForward="@+id/edittext_additem"
         android:padding="10dp" />
 
     <android.support.v7.widget.RecyclerView
