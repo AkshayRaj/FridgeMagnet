@@ -8,9 +8,14 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import ark.org.fridgemagnet.R;
 
@@ -28,8 +33,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i(TAG, "onCreate()");
         setContentView(R.layout.main_activity);
         mActivity = this;
+        mItemAdapter = ItemAdapter.getInstance();
 
         mAddItemEditText = (EditText) findViewById(R.id.edittext_additem);
+        mAddItemEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                if(keyEvent != null) {
+                    if (keyEvent.getAction() == KeyEvent.ACTION_DOWN)
+                        return true;
+
+                    if (keyCode == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                        String string = mAddItemEditText.getText().toString().replace(" ", "");
+                        Log.wtf(TAG, string);
+                        mItemAdapter.getDataSet().add(new Item(string));
+                        mItemAdapter.notifyItemInserted(0);
+                        mAddItemEditText.setText("");
+                    }
+                }
+                return false;
+            }
+        });
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -39,8 +64,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mItemAdapter = ItemAdapter.getInstance();
 
         mRecyclerView.setAdapter(mItemAdapter);
     }

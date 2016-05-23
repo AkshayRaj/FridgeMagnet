@@ -11,6 +11,7 @@
         android:layout_height="100dp"
         android:gravity="center"
         android:hint="Enter a new Item"
+        android:singleLine="true"
         android:padding="10dp" />
 
     <android.support.v7.widget.RecyclerView

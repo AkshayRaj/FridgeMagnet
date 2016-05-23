@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import ark.org.fridgemagnet.R;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     private static ItemAdapter sInstance;
     private Context mContext;
-    private ArrayList<Item> mDataset;
+    private ArrayList<Item> mDataSet;
 
     public static ItemAdapter getInstance(){
         if(sInstance == null){
@@ -30,8 +29,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     // Provide a suitable constructor (depends on the kind of dataset)
     private ItemAdapter() {
-        mDataset = new ArrayList<>();
-        mDataset.add(new Item("Enter a new Item"));
+        mDataSet = new ArrayList<>();
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -60,16 +58,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ItemViewHolder itemViewHolder, int position) {
-        itemViewHolder.mTextView.setText(mDataset.get(position).getName());
+        itemViewHolder.mTextView.setText(mDataSet.get(position).getName());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.size();
+        return mDataSet.size();
     }
 
-    public void setDataset(ArrayList<Item> dataset){
-        mDataset = dataset;
+    public void setDataSet(ArrayList<Item> dataset){
+        mDataSet = dataset;
+    }
+
+    public ArrayList<Item> getDataSet(){
+        return mDataSet;
     }
 }
