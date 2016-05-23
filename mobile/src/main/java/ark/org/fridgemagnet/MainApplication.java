@@ -6,6 +6,8 @@ package ark.org.fridgemagnet;
 import android.app.Application;
 import android.util.Log;
 
+import java.io.IOException;
+
 
 public class MainApplication extends Application {
 

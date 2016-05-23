@@ -15,7 +15,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
+
 import ark.org.fridgemagnet.R;
+import ark.org.fridgemagnet.jsonreaders.ItemReader;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -60,5 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        ItemReader.init(getApplicationContext());
     }
 }
