@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 import ark.org.fridgemagnet.R;
+import ark.org.fridgemagnet.jsonreaders.SwipeableRecyclerViewTouchListener;
 import ark.org.fridgemagnet.jsonreaders.Utils;
 
 public class MainActivity extends AppCompatActivity {
@@ -69,6 +70,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        SwipeableRecyclerViewTouchListener swipeableRecyclerViewTouchListener =
+                new SwipeableRecyclerViewTouchListener(mRecyclerView,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                            /**
+                             * Called to determine whether the given position can be swiped to the left.
+                             *
+                             * @param position
+                             */
+                            @Override
+                            public boolean canSwipeLeft(int position) {
+                                return true;
+                            }
+
+                            /**
+                             * Called to determine whether the given position can be swiped to the right.
+                             *
+                             * @param position
+                             */
+                            @Override
+                            public boolean canSwipeRight(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    mItemAdapter.getDataSet().remove(position);
+                                    mItemAdapter.notifyItemRemoved(position);
+                                }
+                                mItemAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    mItemAdapter.getDataSet().remove(position);
+                                    mItemAdapter.notifyItemRemoved(position);
+                                }
+                                mItemAdapter.notifyDataSetChanged();
+                            }
+                        });
+        mRecyclerView.addOnItemTouchListener(swipeableRecyclerViewTouchListener);
     }
 
     @Override
