@@ -10,16 +10,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.IOException;
+import org.json.JSONArray;
+
+import java.util.ArrayList;
 
 import ark.org.fridgemagnet.R;
-import ark.org.fridgemagnet.jsonreaders.ItemReader;
+import ark.org.fridgemagnet.jsonreaders.Utils;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -36,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         mActivity = this;
         mItemAdapter = ItemAdapter.getInstance();
-
+        ArrayList<Item> items = Utils.getItems(getApplicationContext().getFileStreamPath(Utils.ITEMS_JSON_FILE));
+        if(items != null) {
+            Log.wtf(TAG, "items is not null");
+            mItemAdapter.setDataSet(items);
+        }
         mAddItemEditText = (EditText) findViewById(R.id.edittext_additem);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -56,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
                     String newItem = mAddItemEditText.getText().toString().replace(" ", "");
                     mItemAdapter.getDataSet().add(0,new Item(newItem));
-                    ItemReader.init(getApplicationContext()).insertItem(0, newItem);
                     mItemAdapter.notifyItemInserted(0);
                     mAddItemEditText.setText("");
                     mLayoutManager.scrollToPosition(0);
@@ -66,5 +69,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.wtf(TAG, "onStart()");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.wtf(TAG, "onResume()");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.wtf(TAG, "onPause()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.wtf(TAG, "onStop()");
+        persistItems();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.wtf(TAG, "onDestroy()");
+        super.onDestroy();
+    }
+
+    /**
+     * Items are persisted in a json file on disk
+     */
+    private void persistItems(){
+        ArrayList<Item> dataset = mItemAdapter.getDataSet();
+        JSONArray jsonArray = new JSONArray();
+        for(Item item : dataset){
+            jsonArray.put(item.toJson());
+        }
+        Utils.writeToFile(getApplicationContext(), Utils.ITEMS_JSON_FILE, jsonArray.toString());
     }
 }

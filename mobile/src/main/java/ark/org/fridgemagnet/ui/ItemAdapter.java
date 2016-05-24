@@ -6,16 +6,24 @@ package ark.org.fridgemagnet.ui;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import ark.org.fridgemagnet.R;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+    private static final String TAG = ItemAdapter.class.getSimpleName();
     private static ItemAdapter sInstance;
     private Context mContext;
     private ArrayList<Item> mDataSet;

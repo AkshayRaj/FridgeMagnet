@@ -3,7 +3,11 @@
  */
 package ark.org.fridgemagnet.jsonreaders;
 
+import android.content.Context;
 import android.util.Log;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,8 +18,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import ark.org.fridgemagnet.ui.Item;
 
 public class Utils {
+
+    private static final String TAG = Utils.class.getSimpleName();
+    public static final String ITEMS_JSON_FILE = "Items.json";
 
     /**
      * writes string to the File
@@ -28,8 +39,8 @@ public class Utils {
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+        catch (IOException ioException) {
+            Log.e("Exception", "File write failed: " + ioException.toString());
         }
     }
 
@@ -59,12 +70,27 @@ public class Utils {
                 fileString = stringBuilder.toString();
             }
         }
-        catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
+        catch (FileNotFoundException fileNotFoundException) {
+            Log.e(TAG, "File not found: " + fileNotFoundException.getMessage());
+        } catch (IOException ioException) {
+            Log.e(TAG, "Can not read file: " + ioException.getMessage());
         }
 
         return fileString;
+    }
+
+    /**
+     * converts the json data in the Items.json file into ArrayList<Item>
+     * @param file
+     * @return
+     */
+    public static ArrayList<Item> getItems(File file){
+        Type listType = new TypeToken<ArrayList<Item>>(){}.getType();
+        ArrayList<Item> items = new GsonBuilder().create().fromJson(readFromFile(file), listType);
+        return items;
+    }
+
+    public static void writeToFile(Context appContext, String itemsJsonFile, String data) {
+        writeToFile(appContext.getFileStreamPath(itemsJsonFile), data);
     }
 }
