@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_DONE){
-                    String newItem = mAddItemEditText.getText().toString().replace(" ", "");
+                    String newItem = mAddItemEditText.getText().toString();
                     mItemAdapter.getDataSet().add(0,new Item(newItem));
                     mItemAdapter.notifyItemInserted(0);
                     mAddItemEditText.setText("");
