@@ -1,0 +1,94 @@
+{
+  "project_info": {
+    "project_number": "79071025288",
+    "firebase_url": "https://fridgemagnet-3afdd.firebaseio.com",
+    "project_id": "fridgemagnet-3afdd",
+    "storage_bucket": "fridgemagnet-3afdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79071025288:android:27d689d63f1b7a06",
+        "android_client_info": {
+          "package_name": "com.google.samples.quickstart.signin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79071025288-rl46fer0jcds4aehb4m9pvavif2n0afj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "79071025288-funpuerj2f9k34fu6687h08fsleiifi3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTZUMG0zQnQnA60QWtQqufSKm52WXdjss"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79071025288:android:d0a5d4feeba017ae",
+        "android_client_info": {
+          "package_name": "ark.org.fridgemagnet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79071025288-0upfa2c97tdlk2fie3khvtcpum4ma193.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ark.org.fridgemagnet",
+            "certificate_hash": "B06D62491E35715A5C80893A85CC8915D5F1B900"
+          }
+        },
+        {
+          "client_id": "79071025288-rl46fer0jcds4aehb4m9pvavif2n0afj.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "79071025288-funpuerj2f9k34fu6687h08fsleiifi3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTZUMG0zQnQnA60QWtQqufSKm52WXdjss"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79071025288-rl46fer0jcds4aehb4m9pvavif2n0afj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

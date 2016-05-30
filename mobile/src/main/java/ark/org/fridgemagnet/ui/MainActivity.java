@@ -4,6 +4,7 @@
 package ark.org.fridgemagnet.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,10 @@ import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 
@@ -24,6 +29,7 @@ import ark.org.fridgemagnet.jsonreaders.Utils;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final int RC_SIGN_IN = 9001;
     private Activity mActivity;
     private EditText mAddItemEditText;
     private RecyclerView mRecyclerView;
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
         mRecyclerView.addOnItemTouchListener(swipeableRecyclerViewTouchListener);
+
     }
 
     @Override
